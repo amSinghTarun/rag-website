@@ -1,9 +1,13 @@
 import { CopyCommand } from "@/components/copy-command";
 import { PipelineExplorer } from "@/components/pipeline-explorer";
 
-const repositoryUrl = process.env.NEXT_PUBLIC_REPOSITORY_URL;
+const repositoryUrl =
+  process.env.NEXT_PUBLIC_REPOSITORY_URL ??
+  "https://github.com/amSinghTarun/rag";
 
-const dockerCommand = `docker build -t og-rag .
+const quickstartCommand = `git clone ${repositoryUrl} og-rag
+cd og-rag
+docker build -t og-rag .
 docker run --rm --init \\
   --name og-rag \\
   --stop-timeout 120 \\
@@ -85,20 +89,14 @@ export default function Home() {
             <a href="#quickstart">Quick start</a>
           </div>
 
-          {repositoryUrl ? (
-            <a
-              className="nav-cta"
-              href={repositoryUrl}
-              rel="noreferrer"
-              target="_blank"
-            >
-              View source <ArrowUpRight />
-            </a>
-          ) : (
-            <a className="nav-cta" href="#quickstart">
-              Run locally <ArrowUpRight />
-            </a>
-          )}
+          <a
+            className="nav-cta"
+            href={repositoryUrl}
+            rel="noreferrer"
+            target="_blank"
+          >
+            View repository <ArrowUpRight />
+          </a>
         </nav>
       </header>
 
@@ -124,20 +122,14 @@ export default function Home() {
               <a className="button button-primary" href="#pipeline">
                 Trace the pipeline <span aria-hidden="true">↓</span>
               </a>
-              {repositoryUrl ? (
-                <a
-                  className="button button-ghost"
-                  href={repositoryUrl}
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  Inspect the source <ArrowUpRight />
-                </a>
-              ) : (
-                <a className="button button-ghost" href="#quickstart">
-                  Clone &amp; run <ArrowUpRight />
-                </a>
-              )}
+              <a
+                className="button button-ghost"
+                href={repositoryUrl}
+                rel="noreferrer"
+                target="_blank"
+              >
+                Clone the repository <ArrowUpRight />
+              </a>
             </div>
 
             <div className="hero-proof" aria-label="Project characteristics">
@@ -590,8 +582,16 @@ export default function Home() {
             <div className="quickstart-copy">
               <p className="section-kicker">08 / CLONE &amp; RUN</p>
               <h2>From repository to retrieval in three steps.</h2>
+              <a
+                className="button button-primary quickstart-repository-link"
+                href={repositoryUrl}
+                rel="noreferrer"
+                target="_blank"
+              >
+                Get the repository <ArrowUpRight />
+              </a>
               <ol>
-                <li><span>01</span><p><strong>Start the container.</strong> One image, one named data volume.</p></li>
+                <li><span>01</span><p><strong>Clone and start the container.</strong> One repository, one image, one named data volume.</p></li>
                 <li><span>02</span><p><strong>Add an OpenAI API key.</strong> The app boots keyless, then enables indexing and search.</p></li>
                 <li><span>03</span><p><strong>Create a collection and upload.</strong> Wait for ready, inspect retrieval, then generate.</p></li>
               </ol>
@@ -601,9 +601,9 @@ export default function Home() {
               <div className="terminal-header">
                 <div><i /><i /><i /></div>
                 <span>~/og-rag</span>
-                <CopyCommand command={dockerCommand} />
+                <CopyCommand command={quickstartCommand} />
               </div>
-              <pre><code><span className="prompt">$</span> docker build -t og-rag .{"\n"}<span className="prompt">$</span> docker run --rm --init \{"\n"}    --name og-rag \{"\n"}    --stop-timeout 120 \{"\n"}    -p 127.0.0.1:3000:3000 \{"\n"}    -v og-rag-data:/app/data \{"\n"}    og-rag</code></pre>
+              <pre><code><span className="prompt">$</span> git clone {repositoryUrl} og-rag{"\n"}<span className="prompt">$</span> cd og-rag{"\n"}<span className="prompt">$</span> docker build -t og-rag .{"\n"}<span className="prompt">$</span> docker run --rm --init \{"\n"}    --name og-rag \{"\n"}    --stop-timeout 120 \{"\n"}    -p 127.0.0.1:3000:3000 \{"\n"}    -v og-rag-data:/app/data \{"\n"}    og-rag</code></pre>
               <div className="terminal-success">
                 <span>●</span>
                 <p><strong>Local RAG is running</strong><small>http://localhost:3000</small></p>

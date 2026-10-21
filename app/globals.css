@@ -1549,11 +1549,15 @@ a {
 
 .quickstart-copy ol {
   display: grid;
-  margin: 42px 0 0;
+  margin: 32px 0 0;
   padding: 0;
   gap: 0;
   list-style: none;
   border-top: 1px solid var(--line-strong);
+}
+
+.quickstart-repository-link {
+  margin-top: 28px;
 }
 
 .quickstart-copy li {
